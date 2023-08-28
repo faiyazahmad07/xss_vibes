@@ -24,3 +24,9 @@ python3 main.py -f <filename> -o <output>
 -f: Filename that contains bunch of links
 -o: Output filename in which all the vulnerable endpoints is stored
 ```
+
+### CONTRIBUTION
+
+- [FAIYAZ AHMAD](https://www.linkedin.com/in/faiyaz-ahmad-64457520b)
+- [ASIF PATHAN](https://www.linkedin.com/in/asifpathan48/)
+- [KUNAL DHUMAL](https://www.linkedin.com/in/kunal-dhumal-47356721a/)
