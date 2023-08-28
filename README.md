@@ -25,6 +25,10 @@ python3 main.py -f <filename> -o <output>
 -o: Output filename in which all the vulnerable endpoints is stored
 ```
 
+### DEMONSTRATION
+
+[Video Link](https://www.youtube.com/watch?v=sAYZu5ItX90)
+
 ### CONTRIBUTION
 
 - [FAIYAZ AHMAD](https://www.linkedin.com/in/faiyaz-ahmad-64457520b)
