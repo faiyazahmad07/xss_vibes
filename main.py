@@ -169,9 +169,10 @@ class Main:
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
                         vulnerable_links.append(url)
+                        return url
                 except Exception as e:
                     print(e)
-        return vulnerable_links
+        return None
 
 if __name__ == "__main__":
     try:
