@@ -20,7 +20,7 @@ class Main:
 
     def read(self,filename):
         print(Fore.WHITE + "READING URLS")
-        urls = subprocess.check_output(f"cat {filename} | grep '='",shell=True).decode('utf-8')
+        urls = subprocess.check_output(f"cat {filename} | grep '=' | sort -u",shell=True).decode('utf-8')
         return urls.split()
 
     def write(self, output, value):
