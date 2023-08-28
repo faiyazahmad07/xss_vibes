@@ -130,7 +130,7 @@ class Main:
         dbs = json.load(dbs)
         for char in arr:
             for payload in dbs:
-                attributes = payload['Attributes']
+                attributes = payload['Attribute']
                 if char in attributes:
                     payload['count'] += 1
 
@@ -139,7 +139,7 @@ class Main:
         dbs.sort(key=fun,reverse=True)
         #print(dbs)
         for payload in dbs:
-            if payload['count'] == len(arr) and len(payload['Attributes']) == payload['count'] :
+            if payload['count'] == len(arr) and len(payload['Attribute']) == payload['count'] :
                 #print(payload)
                 #print(payload['count'],len(payload['Attributes']))
                 payload_list.insert(0,payload['Payload'])
@@ -152,7 +152,7 @@ class Main:
 
 
     def scanner(self,url):
-        vulnerable_links = []
+        #vulnerable_links = []
         out = self.fuzzer(url)
        # print(out)
         for data in out:
@@ -168,7 +168,6 @@ class Main:
                     response = requests.get(new_url,params=data).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
-                        vulnerable_links.append(url)
                         return url
                 except Exception as e:
                     print(e)
@@ -189,7 +188,7 @@ if __name__ == "__main__":
             print(Fore.WHITE + f"[+] TESTING {url}")
             vuln = Scanner.scanner(url)
             if vuln:
-                Scanner.write(output,vuln[0])
+                Scanner.write(output,vuln)
         print(Fore.WHITE + "[+] COMPLETED")
     except Exception as e:
         print(e)
