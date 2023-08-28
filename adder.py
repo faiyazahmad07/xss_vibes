@@ -2,7 +2,7 @@ import json
 payload = input("Enter the payload: ")
 attributes = input("Enter the attributes(Separate by spaces): ")
 
-new_data = {"Payload": payload, "Attributes": attributes.split(" "),"count":0}
+new_data = {"Payload": payload, "Attribute": attributes.split(" "),"count":0}
 
 f = open('payloads.json')
 data = json.load(f)
