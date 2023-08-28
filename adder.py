@@ -8,5 +8,5 @@ f = open('payloads.json')
 data = json.load(f)
 data.append(new_data)
 with open('payloads.json',"w") as write_data:
-    json.dump(data,write_data)
+    json.dump(data,write_data,indent=4)
 print("[+] PAYLOAD HAS BEEN ADDED")
