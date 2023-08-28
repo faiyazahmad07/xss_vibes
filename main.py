@@ -171,6 +171,7 @@ class Main:
                         return url
                 except Exception as e:
                     print(e)
+        print(Fore.LIGHTWHITE_EX + f"[+] TARGET SEEMS TO BE NOT VULNERABLE")
         return None
 
 if __name__ == "__main__":
