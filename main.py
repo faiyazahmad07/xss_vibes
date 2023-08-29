@@ -144,6 +144,7 @@ class Main:
         #print(dbs)
         for payload in dbs:
             if payload['count'] == len(arr) and len(payload['Attribute']) == payload['count'] :
+                print(Fore.GREEN + f"[+] FOUND SOME BEST PAYLOAD FOR THE TARGET")
                 #print(payload)
                 #print(payload['count'],len(payload['Attributes']))
                 payload_list.insert(0,payload['Payload'])
