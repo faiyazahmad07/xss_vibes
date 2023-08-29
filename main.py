@@ -1,4 +1,5 @@
 import requests
+import re
 from colorama import Fore
 import json
 from optparse import OptionParser
@@ -25,6 +26,9 @@ class Main:
 
     def write(self, output, value):
         subprocess.call(f"echo '{value}' >> {output}",shell=True)
+
+    def replace(url,param_name,value):
+        return re.sub(f"{param_name}=([^&]+)",f"{param_name}={value}",url)
 
     def bubble_sort(self, arr):
         #print(arr)
@@ -168,7 +172,7 @@ class Main:
                     response = requests.get(new_url,params=data).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
-                        return url
+                        return self.replace(url,key,payload)
                 except Exception as e:
                     print(e)
         print(Fore.LIGHTWHITE_EX + f"[+] TARGET SEEMS TO BE NOT VULNERABLE")
