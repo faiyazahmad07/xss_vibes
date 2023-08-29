@@ -20,17 +20,25 @@ class Main:
         """ + Fore.WHITE)
 
     def read(self,filename):
+        '''
+        Read & sort GET  urls from given filename
+        '''
         print(Fore.WHITE + "READING URLS")
         urls = subprocess.check_output(f"cat {filename} | grep '=' | sort -u",shell=True).decode('utf-8')
         return urls.split()
 
     def write(self, output, value):
+        '''
+        Writes the output back to the given filename.
+        '''
         subprocess.call(f"echo '{value}' >> {output}",shell=True)
 
-    def replace(url,param_name,value):
+    def replace(self,url,param_name,value):
         return re.sub(f"{param_name}=([^&]+)",f"{param_name}={value}",url)
-
     def bubble_sort(self, arr):
+        '''
+        For sorting the payloads
+        '''
         #print(arr)
         a = 0
         keys = []
@@ -57,6 +65,11 @@ class Main:
         return arr
 
     def parameters(self, url):
+
+        '''
+        This function will return every parameter in the url as dictionary.
+        '''
+
         param_names = []
         params = urlparse(url).query
         params = params.split("&")
@@ -72,6 +85,9 @@ class Main:
         return param_names
 
     def parser(self, url, param_name, value):
+        '''
+        This function will replace the parameter's value with the given value and returns a dictionary
+        '''
         final_parameters = {}
         parsed_data = urlparse(url)
         params = parsed_data.query
@@ -115,7 +131,8 @@ class Main:
             "'",
             '"',
             "<",
-            "/"
+            "/",
+            ";"
         ]
         parameters = self.parameters(url)
         print(f"[+] {len(parameters)} parameters identified")
@@ -144,8 +161,8 @@ class Main:
         #print(dbs)
         for payload in dbs:
             if payload['count'] == len(arr) and len(payload['Attribute']) == payload['count'] :
-                print(Fore.GREEN + f"[+] FOUND SOME BEST PAYLOAD FOR THE TARGET")
                 #print(payload)
+                print(Fore.GREEN + f"[+] FOUND SOME PERFECT PAYLOADS FOR THE TARGET")
                 #print(payload['count'],len(payload['Attributes']))
                 payload_list.insert(0,payload['Payload'])
                 #print(payload_list)
@@ -173,6 +190,7 @@ class Main:
                     response = requests.get(new_url,params=data).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
+
                         return self.replace(url,key,payload)
                 except Exception as e:
                     print(e)
@@ -181,7 +199,7 @@ class Main:
 
 if __name__ == "__main__":
     try:
-        out = []
+        #out = []
         parser = OptionParser()
         parser.add_option('-f',dest='filename')
         parser.add_option('-o',dest='output')
@@ -199,4 +217,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(e)
 
-#print(Main("test.txt","out.txt").scanner("http://testphp.vulnweb.com/hpp/?pp=batman"))
+#print(Main("test.txt","out.txt").replace("http://testphp.vulnweb.com/listproducts.php?cat=1","cat","superman"))
