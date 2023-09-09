@@ -6,6 +6,7 @@
 ### What's New?
 
 - Added threads feature: You can now specify the threads to send multiple request at the same time!(Details given below)
+- Improved Payloads: The payloads are now more accurate to the target
 
 ### FEATURES
 
