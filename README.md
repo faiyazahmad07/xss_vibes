@@ -2,12 +2,16 @@
 A modern tool written in Python that automates your xss findings.
 ![alt_text](xss_vibes.png)
 
+### What's New?
+
+- Added threads feature: You can now specify the threads to send multiple request at the same time!(Details given below)
+
 ### FEATURES
 
 - Customizable: You can add your custom payload using adder.py
 - Dynamic: The tool will prioritize the payloads based on the target's behavior
 - Scalable: You can use this tool on bunch of links
-
+- Speed: Send concurrent request to multiple urls
 
 ### I N S T A L L A T I O N
 
