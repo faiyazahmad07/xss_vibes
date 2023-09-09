@@ -5,12 +5,27 @@ import json
 from optparse import OptionParser
 import subprocess
 from urllib.parse import urlparse
+from concurrent.futures import ThreadPoolExecutor
 
+
+parser = OptionParser()
+parser.add_option('-f',dest='filename')
+parser.add_option('-o',dest='output')
+parser.add_option('-t',dest='threads')
+val,args = parser.parse_args()
+filename = val.filename
+output = val.output
+threads = int(val.threads)
+if not threads:
+    threads = 1
+elif threads > 10:
+    threads = 7
 class Main:
 
     def __init__(self, filename, output):
         self.filename = filename
         self.output = output
+        self.result = []
         print(Fore.BLUE + """
              _     _ _______ _______ _    _ _____ ______  _______ _______
               \___/  |______ |______  \  /    |   |_____] |______ |______
@@ -117,7 +132,8 @@ class Main:
                 #print(new_url)
                 response = requests.get(new_url,params=final_parameters).text
                 if data + "randomstring" in response:
-                    print(Fore.GREEN + f"[+] {data} is reflecting in the response")
+                    if not threads or threads == 1:
+                        print(Fore.GREEN + f"[+] {data} is reflecting in the response")
                     dic[param_name].append(data)
         except Exception as e:
             print(e)
@@ -126,7 +142,7 @@ class Main:
 
     def fuzzer(self, url):
         data = []
-        dangerous_characters = [
+        dangerous_characters = [ # You can add dangerous characters here
             ">",
             "'",
             '"',
@@ -135,18 +151,22 @@ class Main:
             ";"
         ]
         parameters = self.parameters(url)
-        print(f"[+] {len(parameters)} parameters identified")
+        if not threads or int(threads) == 1:
+            print(f"[+] {len(parameters)} parameters identified")
         for parameter in parameters:
-            print(f"[+] Testing parameter name: {parameter}")
+            if not threads or threads == 1:
+                print(f"[+] Testing parameter name: {parameter}")
             out = self.validator(dangerous_characters,parameter,url)
             data.append(out)
-        print("[+] FUZZING HAS BEEN COMPLETED")
+        if not threads or threads == 1:
+            print("[+] FUZZING HAS BEEN COMPLETED")
         return self.bubble_sort(data)
 
     def filter_payload(self,arr):
         payload_list = []
         size = int(len(arr) / 2)
-        print(Fore.WHITE + f"[+] LOADING PAYLOAD FILE payloads.json")
+        if not threads or threads == 1:
+            print(Fore.WHITE + f"[+] LOADING PAYLOAD FILE payloads.json")
         dbs = open("payloads.json")
         dbs = json.load(dbs)
         for char in arr:
@@ -162,7 +182,8 @@ class Main:
         for payload in dbs:
             if payload['count'] == len(arr) and len(payload['Attribute']) == payload['count'] :
                 #print(payload)
-                print(Fore.GREEN + f"[+] FOUND SOME PERFECT PAYLOADS FOR THE TARGET")
+                if not threads or threads == 1:
+                    print(Fore.GREEN + f"[+] FOUND SOME PERFECT PAYLOADS FOR THE TARGET")
                 #print(payload['count'],len(payload['Attributes']))
                 payload_list.insert(0,payload['Payload'])
                 #print(payload_list)
@@ -174,7 +195,7 @@ class Main:
 
 
     def scanner(self,url):
-        #vulnerable_links = []
+        print(Fore.WHITE + f"[+] TESTING {url}")
         out = self.fuzzer(url)
        # print(out)
         for data in out:
@@ -191,28 +212,29 @@ class Main:
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
 
-                        return self.replace(url,key,payload)
+                        self.result.append(self.replace(url,key,payload))
+                        return True
                 except Exception as e:
                     print(e)
-        print(Fore.LIGHTWHITE_EX + f"[+] TARGET SEEMS TO BE NOT VULNERABLE")
+        if not threads or threads == 1:
+            print(Fore.LIGHTWHITE_EX + f"[+] TARGET SEEMS TO BE NOT VULNERABLE")
         return None
 
 if __name__ == "__main__":
     try:
         #out = []
-        parser = OptionParser()
-        parser.add_option('-f',dest='filename')
-        parser.add_option('-o',dest='output')
-        val,args = parser.parse_args()
-        filename = val.filename
-        output = val.output
         Scanner = Main(filename,output)
         urls = Scanner.read(filename)
+        print(Fore.GREEN + "[+] CURRENT THREADS: {}".format(threads))
+        '''
         for url in urls:
             print(Fore.WHITE + f"[+] TESTING {url}")
             vuln = Scanner.scanner(url)
-            if vuln:
-                Scanner.write(output,vuln)
+        '''
+        with ThreadPoolExecutor(max_workers=threads) as executor:
+            executor.map(Scanner.scanner,urls)
+        for i in Scanner.result:
+            Scanner.write(output,i)
         print(Fore.WHITE + "[+] COMPLETED")
     except Exception as e:
         print(e)
