@@ -15,10 +15,11 @@ parser.add_option('-t',dest='threads')
 val,args = parser.parse_args()
 filename = val.filename
 output = val.output
-threads = int(val.threads)
-if not threads:
+try:
+    threads = int(val.threads)
+except TypeError:
     threads = 1
-elif threads > 10:
+if threads > 10:
     threads = 7
 class Main:
 
