@@ -22,9 +22,7 @@
         "Attribute": [
             "<",
             ">",
-            "/",
-            "'",
-            "\""
+            "/"
         ],
         "count": 0
     },
@@ -41,8 +39,7 @@
         "Attribute": [
             ">",
             "<",
-            "/",
-            ""
+            "/"
         ],
         "count": 0
     },
@@ -52,10 +49,7 @@
             "<",
             ">",
             ";",
-            "/",
-            "\"",
-            "'",
-            ""
+            "/"
         ],
         "count": 0
     },
@@ -66,8 +60,7 @@
             "<",
             ">",
             "/",
-            "'",
-            ""
+            "'"
         ],
         "count": 0
     },
@@ -77,8 +70,7 @@
             "\"",
             ">",
             "<",
-            "'",
-            ""
+            "'"
         ],
         "count": 0
     },
@@ -87,8 +79,7 @@
         "Attribute": [
             "\"",
             "<",
-            ">",
-            ""
+            ">"
         ],
         "count": 0
     },
@@ -99,8 +90,7 @@
             "'",
             ">",
             "<",
-            "/",
-            ""
+            "/"
         ],
         "count": 0
     },
@@ -122,160 +112,6 @@
             "<",
             ";",
             "/"
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<a onpaste=\"alert(1)\" contenteditable>test</a>",
-        "Attribute": [
-            "\"",
-            "'",
-            "/",
-            ">",
-            "<",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<a ondblclick=\"alert(1)\">test</a>",
-        "Attribute": [
-            "\"",
-            ">",
-            "<",
-            "/",
-            "'",
-            ";"
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<a href=\"javascript:alert('XSS')\">Click Me</a>",
-        "Attribute": [
-            "\"",
-            "'",
-            ">",
-            "<",
-            "/",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<!--><script>alert(\"XSS\");</script> -->",
-        "Attribute": [
-            "!",
-            ">",
-            "<",
-            "'",
-            "\"",
-            ";",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<iframe src=\"javascript:alert('XSS');\"></iframe>",
-        "Attribute": [
-            "\"",
-            ";",
-            "'",
-            ">",
-            "<",
-            "/",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "'\"><script>alert('XSS');</script>",
-        "Attribute": [
-            "'",
-            "\"",
-            ">",
-            "<",
-            "/",
-            ";",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<script>alert('XSS');</script>",
-        "Attribute": [
-            "<",
-            ">",
-            "'",
-            ";",
-            "/",
-            "\"",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<svg><script xlink:href=data:,alert('XSS')></script></svg>",
-        "Attribute": [
-            "<",
-            ">",
-            ":",
-            ",",
-            "'",
-            "\"",
-            "<",
-            "/",
-            ";",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<img src=\"x:x\" onerror=\"alert('XSS')\">",
-        "Attribute": [
-            "<",
-            "\"",
-            ";",
-            "\"",
-            "'",
-            "/",
-            ">",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<input/onmouseover=\"alert('XSS')\">",
-        "Attribute": [
-            "<",
-            "/",
-            "'",
-            "\"",
-            "/",
-            ";",
-            ">",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<script>/*<![CDATA[*/alert('XSS')//]]></script>",
-        "Attribute": [
-            "<",
-            ">",
-            "/",
-            "'",
-            "\"",
-            ""
-        ],
-        "count": 0
-    },
-    {
-        "Payload": "<img/src=%00 onerror=this.onerror=confirm(1)>",
-        "Attribute": [
-            "<",
-            "/",
-            ">",
-            ""
         ],
         "count": 0
     }
