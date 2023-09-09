@@ -1,5 +1,6 @@
 ## XSS_VIBES
-A modern tool written in Python that automates your xss findings.
+"Experience the Vibes of Security with xss_vibes"
+
 ![alt_text](xss_vibes.png)
 
 ### What's New?
