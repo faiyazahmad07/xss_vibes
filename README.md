@@ -23,6 +23,7 @@ python3 main.py -f <filename> -o <output>
 
 -f: Filename that contains bunch of links
 -o: Output filename in which all the vulnerable endpoints is stored
+-t: No of threads[Increase the threads if you want more speed] (Max: 10)
 ```
 
 ### DEMONSTRATION
