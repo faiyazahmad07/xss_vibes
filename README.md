@@ -38,6 +38,6 @@ python3 main.py -f <filename> -o <output>
 
 ### CONTRIBUTION
 
-- [FAIYAZ AHMAD](https://www.linkedin.com/in/faiyaz-ahmad-64457520b)
-- [ASIF PATHAN](https://www.linkedin.com/in/asifpathan48/)
-- [KUNAL DHUMAL](https://www.linkedin.com/in/kunal-dhumal-47356721a/)
+- [FAIYAZ AHMAD](https://www.linkedin.com/in/faiyaz-ahmad-64457520b): DEVELOPER
+- [ASIF PATHAN](https://www.linkedin.com/in/asifpathan48/): ADDED PAYLOADS
+- [KUNAL DHUMAL](https://www.linkedin.com/in/kunal-dhumal-47356721a/): ADDED PAYLOADS
