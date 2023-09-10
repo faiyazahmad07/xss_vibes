@@ -157,6 +157,9 @@ class Main:
             ";"
         ]
         parameters = self.parameters(url)
+        if '' in parameters and len(parameters) == 1:
+            print(f"[+] NO GET PARAMETER IDENTIFIED...EXITING")
+            exit()
         if not threads or int(threads) == 1:
             print(f"[+] {len(parameters)} parameters identified")
         for parameter in parameters:
