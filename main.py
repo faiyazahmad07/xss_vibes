@@ -10,11 +10,13 @@ from concurrent.futures import ThreadPoolExecutor
 
 parser = OptionParser()
 parser.add_option('-f',dest='filename')
+parser.add_option("-u",dest="url")
 parser.add_option('-o',dest='output')
 parser.add_option('-t',dest='threads')
 val,args = parser.parse_args()
 filename = val.filename
 output = val.output
+url = val.url
 try:
     threads = int(val.threads)
 except TypeError:
@@ -23,8 +25,9 @@ if threads > 10:
     threads = 7
 class Main:
 
-    def __init__(self, filename, output):
+    def __init__(self,url=None, filename=None, output=None):
         self.filename = filename
+        self.url = url
         self.output = output
         self.result = []
         print(Fore.BLUE + """
@@ -41,6 +44,8 @@ class Main:
         '''
         print(Fore.WHITE + "READING URLS")
         urls = subprocess.check_output(f"cat {filename} | grep '=' | sort -u",shell=True).decode('utf-8')
+        if not urls:
+            print(Fore.GREEN + f"[+] NO URLS WITH GET PARAMETER FOUND")
         return urls.split()
 
     def write(self, output, value):
@@ -224,6 +229,12 @@ class Main:
 if __name__ == "__main__":
     try:
         #out = []
+        if url:
+            Scanner = Main(url,output)
+            Scanner.scanner(url)
+            if Scanner.result:
+                Scanner.write(output,Scanner.result[0])
+                exit()
         Scanner = Main(filename,output)
         urls = Scanner.read(filename)
         print(Fore.GREEN + "[+] CURRENT THREADS: {}".format(threads))
