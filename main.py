@@ -234,7 +234,7 @@ if __name__ == "__main__":
             Scanner.scanner(url)
             if Scanner.result:
                 Scanner.write(output,Scanner.result[0])
-                exit()
+            exit()
         Scanner = Main(filename,output)
         urls = Scanner.read(filename)
         print(Fore.GREEN + "[+] CURRENT THREADS: {}".format(threads))
