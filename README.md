@@ -8,6 +8,7 @@
 - Added threads feature: You can now specify the threads to send multiple request at the same time!(Details given below)
 - Improved Payloads: The payloads are now more accurate to the target
 - Single URL Scan: Now you can scan single url by using -u flag.
+- Headers: You can now add your custom headers to test authenticated or restricted endpoints!
 
 ### FEATURES
 
