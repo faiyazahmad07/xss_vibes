@@ -32,7 +32,7 @@ headers = val.headers
 
 try:
     if headers:
-        #print(Fore.WHITE + "[+] HEADERS: {}".format(headers))
+        print(Fore.WHITE + "[+] HEADERS: {}".format(headers))
         headers = Parser.headerParser(headers.split(','))
 except AttributeError:
     headers = Parser.headerParser(headers.split())
