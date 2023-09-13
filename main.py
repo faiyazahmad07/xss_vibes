@@ -152,7 +152,7 @@ class Main:
                 new_url = urlparse(url).scheme + "://" + urlparse(url).hostname + "/" + urlparse(url).path
                 #print(new_url)
                 if self.headers:
-                    print("I am here")
+                    #print("I am here")
                     response = requests.get(new_url,params=final_parameters,headers=self.headers).text
                 else:
                     response = requests.get(new_url,params=final_parameters).text
@@ -237,7 +237,7 @@ class Main:
                     new_url = parsed_data.scheme +  "://" + parsed_data.netloc + "/" + parsed_data.path
                     #print(new_url)
                     if self.headers:
-                        print("I am here")
+                        #print("I am here")
                         response = requests.get(new_url,params=data, headers=self.headers).text
                     else:
                         response = requests.get(new_url, params=data).text
