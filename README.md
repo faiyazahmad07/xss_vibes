@@ -38,8 +38,8 @@ python3 main.py -f <filename> -o <output>
 
 [Video Link](https://www.youtube.com/watch?v=sAYZu5ItX90)
 
-### CONTRIBUTION
+### CONTRIBUTORS
 
-- [FAIYAZ AHMAD](https://www.linkedin.com/in/faiyaz-ahmad-64457520b): DEVELOPER
-- [ASIF PATHAN](https://www.linkedin.com/in/asifpathan48/): ADDED PAYLOADS
-- [KUNAL DHUMAL](https://www.linkedin.com/in/kunal-dhumal-47356721a/): ADDED PAYLOADS
+- [Asif Pathan](https://www.linkedin.com/in/asifpathan48/): Contributed in adding payloads
+- [Kunal Dhumal](https://www.linkedin.com/in/kunal-dhumal-47356721a/): Contributed in adding payloads
+- [Krishna Gupta](https://www.linkedin.com/in/iamkrishnagupta/): Developed Module
