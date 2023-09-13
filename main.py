@@ -1,4 +1,5 @@
 import requests
+from Header import Parser
 import re
 from colorama import Fore
 import json
@@ -7,36 +8,50 @@ import subprocess
 from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 
+print(Fore.LIGHTBLUE_EX + """
+                 _     _ _______ _______ _    _ _____ ______  _______ _______
+                  \___/  |______ |______  \  /    |   |_____] |______ |______
+                 _/   \_ ______| ______|   \/   __|__ |_____] |______ ______|
+                                #Harmonizing Web Safety
+                                #Author: Faiyaz Ahmad
+            """ + Fore.WHITE)
+
 
 parser = OptionParser()
-parser.add_option('-f',dest='filename')
-parser.add_option("-u",dest="url")
-parser.add_option('-o',dest='output')
-parser.add_option('-t',dest='threads')
+parser.add_option('-f',dest='filename',help="specify Filename to scan. Eg: urls.txt etc")
+parser.add_option("-u",dest="url",help="scan a single URL. Eg: http://example.com/?id=2")
+parser.add_option('-o',dest='output',help="filename to store output. Eg: result.txt")
+parser.add_option('-t',dest='threads',help="no of threads to send concurrent requests(Max: 10)")
+parser.add_option('-H',dest='headers',help="specify Custom Headers")
 val,args = parser.parse_args()
 filename = val.filename
+threads = val.threads
 output = val.output
 url = val.url
+headers = val.headers
+
 try:
-    threads = int(val.threads)
+    if headers:
+        #print(Fore.WHITE + "[+] HEADERS: {}".format(headers))
+        headers = Parser.headerParser(headers.split(','))
+except AttributeError:
+    headers = Parser.headerParser(headers.split())
+
+try:
+    threads = int(threads)
 except TypeError:
     threads = 1
 if threads > 10:
     threads = 7
 class Main:
 
-    def __init__(self,url=None, filename=None, output=None):
+    def __init__(self,url=None, filename=None, output=None,headers=None):
         self.filename = filename
         self.url = url
         self.output = output
+        self.headers = headers
+        #print(headers)
         self.result = []
-        print(Fore.BLUE + """
-             _     _ _______ _______ _    _ _____ ______  _______ _______
-              \___/  |______ |______  \  /    |   |_____] |______ |______
-             _/   \_ ______| ______|   \/   __|__ |_____] |______ ______|
-                            #Harmonizing Web Safety
-                            #Author: Faiyaz Ahmad
-        """ + Fore.WHITE)
 
     def read(self,filename):
         '''
@@ -136,7 +151,11 @@ class Main:
                 final_parameters = self.parser(url,param_name,data + "randomstring")
                 new_url = urlparse(url).scheme + "://" + urlparse(url).hostname + "/" + urlparse(url).path
                 #print(new_url)
-                response = requests.get(new_url,params=final_parameters).text
+                if self.headers:
+                    print("I am here")
+                    response = requests.get(new_url,params=final_parameters,headers=self.headers).text
+                else:
+                    response = requests.get(new_url,params=final_parameters).text
                 if data + "randomstring" in response:
                     if not threads or threads == 1:
                         print(Fore.GREEN + f"[+] {data} is reflecting in the response")
@@ -217,7 +236,11 @@ class Main:
                     parsed_data = urlparse(url)
                     new_url = parsed_data.scheme +  "://" + parsed_data.netloc + "/" + parsed_data.path
                     #print(new_url)
-                    response = requests.get(new_url,params=data).text
+                    if self.headers:
+                        print("I am here")
+                        response = requests.get(new_url,params=data, headers=self.headers).text
+                    else:
+                        response = requests.get(new_url, params=data).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
 
@@ -232,13 +255,14 @@ class Main:
 if __name__ == "__main__":
     try:
         #out = []
+        #print(headers)
         if url:
-            Scanner = Main(url,output)
+            Scanner = Main(url,output,headers=headers)
             Scanner.scanner(url)
             if Scanner.result:
                 Scanner.write(output,Scanner.result[0])
             exit()
-        Scanner = Main(filename,output)
+        Scanner = Main(filename,output,headers=headers)
         urls = Scanner.read(filename)
         print(Fore.GREEN + "[+] CURRENT THREADS: {}".format(threads))
         '''
