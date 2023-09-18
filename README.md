@@ -9,6 +9,9 @@
 - Improved Payloads: The payloads are now more accurate to the target
 - Single URL Scan: Now you can scan single url by using -u flag.
 - Headers: You can now add your custom headers to test authenticated or restricted endpoints!
+- Improved Adder.py: Now you can payloads directly from a file! The new adder.py can automatically detect all the dangerous characters.
+- WAF: This tool can now detect web application firewalls and then use specialized payloads to bypasss them.
+- Custom WAF: You can choose payloads that are designed for specific waf.
 
 ### FEATURES
 
