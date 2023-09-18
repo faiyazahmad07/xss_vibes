@@ -1,10 +1,13 @@
 import requests
 from Header import Parser
 import re
+from adder import Adder
 from colorama import Fore
 import json
+from Waf import Waf_Detect
 from optparse import OptionParser
 import subprocess
+import sys
 from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 
@@ -13,21 +16,29 @@ print(Fore.LIGHTBLUE_EX + """
                   \___/  |______ |______  \  /    |   |_____] |______ |______
                  _/   \_ ______| ______|   \/   __|__ |_____] |______ ______|
                                 #Harmonizing Web Safety
-                                #Author: Faiyaz Ahmad
+                                 #Author: Faiyaz Ahmad
             """ + Fore.WHITE)
 
 
 parser = OptionParser()
-parser.add_option('-f',dest='filename',help="specify Filename to scan. Eg: urls.txt etc")
-parser.add_option("-u",dest="url",help="scan a single URL. Eg: http://example.com/?id=2")
-parser.add_option('-o',dest='output',help="filename to store output. Eg: result.txt")
-parser.add_option('-t',dest='threads',help="no of threads to send concurrent requests(Max: 10)")
-parser.add_option('-H',dest='headers',help="specify Custom Headers")
+
+parser.add_option('-f', dest='filename', help="specify Filename to scan. Eg: urls.txt etc")
+parser.add_option("-u", dest="url", help="scan a single URL. Eg: http://example.com/?id=2")
+parser.add_option('-o', dest='output', help="filename to store output. Eg: result.txt")
+parser.add_option('-t', dest='threads', help="no of threads to send concurrent requests(Max: 10)")
+parser.add_option('-H', dest='headers', help="specify Custom Headers")
+parser.add_option('--waf', dest='waf',action='store_true', help="detect web application firewall and then test payloads")
+parser.add_option('-w', dest='custom_waf',help='use specific payloads related to W.A.F')
+parser.add_option('--pipe',dest="pipe",action="store_true",help="pipe output of a process as an input")
+
 val,args = parser.parse_args()
 filename = val.filename
 threads = val.threads
 output = val.output
 url = val.url
+waf = val.waf
+pipe = val.pipe
+custom_waf = val.custom_waf
 headers = val.headers
 
 try:
@@ -67,6 +78,8 @@ class Main:
         '''
         Writes the output back to the given filename.
         '''
+        if not output:
+            return None
         subprocess.call(f"echo '{value}' >> {output}",shell=True)
 
     def replace(self,url,param_name,value):
@@ -140,8 +153,9 @@ class Main:
                 param = param.split("=")
                 #print(param)
                 final_parameters[param[0]] = param[1]
-        #print(final_parameters)
+        #print(final_parameters[param_name] + value)
         final_parameters[param_name] = value
+        #print(final_parameters)
         return final_parameters
 
     def validator(self, arr, param_name, url):
@@ -167,14 +181,7 @@ class Main:
 
     def fuzzer(self, url):
         data = []
-        dangerous_characters = [ # You can add dangerous characters here
-            ">",
-            "'",
-            '"',
-            "<",
-            "/",
-            ";"
-        ]
+        dangerous_characters = Adder().dangerous_characters
         parameters = self.parameters(url)
         if '' in parameters and len(parameters) == 1:
             print(f"[+] NO GET PARAMETER IDENTIFIED...EXITING")
@@ -190,21 +197,45 @@ class Main:
             print("[+] FUZZING HAS BEEN COMPLETED")
         return self.bubble_sort(data)
 
-    def filter_payload(self,arr):
+    def filter_payload(self,arr,firewall):
         payload_list = []
         size = int(len(arr) / 2)
         if not threads or threads == 1:
             print(Fore.WHITE + f"[+] LOADING PAYLOAD FILE payloads.json")
         dbs = open("payloads.json")
         dbs = json.load(dbs)
+        #print(dbs)
+        new_dbs = []
+        #print(firewall)
+        if firewall:
+            print(Fore.GREEN + f"[+] FILTERING PAYLOADS FOR {firewall.upper()}")
+            try:
+                for i in range(0,len(dbs)):
+                    if dbs[i]['waf'] == firewall:
+                        #print(1)
+                        new_dbs.append(dbs[i])
+                    #size = len(dbs)
+            except Exception as e:
+                print(e)
+            if not new_dbs:
+                print(Fore.GREEN + "[+] NO PAYLOADS FOUND FOR THIS WAF")
+                exit()
+        else:
+            for i in range(0,len(dbs)):
+                if not dbs[i]['waf']:
+                    new_dbs.append(dbs[i])
+        dbs = new_dbs
+        #print(dbs)
         for char in arr:
             for payload in dbs:
                 attributes = payload['Attribute']
                 if char in attributes:
                     payload['count'] += 1
-
+        #print(dbs)
         def fun(e):
             return e['count']
+
+        #size = int(len(dbs) / 2)
         dbs.sort(key=fun,reverse=True)
         #print(dbs)
         for payload in dbs:
@@ -224,18 +255,33 @@ class Main:
 
     def scanner(self,url):
         print(Fore.WHITE + f"[+] TESTING {url}")
+        if waf:
+            print(Fore.LIGHTGREEN_EX + "[+] DETECTING WAF")
+            firewall = Waf_Detect(url).waf_detect()
+            if firewall:
+                print(Fore.LIGHTGREEN_EX + f"[+] {firewall.upper()} DETECTED")
+            else:
+                print(Fore.LIGHTGREEN_EX + f"[+] NO WAF FOUND! GOING WITH THE NORMAL PAYLOADS")
+                firewall = None
+        elif custom_waf:
+            #print(1)
+            firewall = custom_waf
+        else:
+            firewall = None
         out = self.fuzzer(url)
        # print(out)
         for data in out:
             for key in data:
-                payload_list = self.filter_payload(data[key])
+                payload_list = self.filter_payload(data[key],firewall)
                 #print(f"[+] TESTING THE BELOW PAYLOADS {payload_list}")
             for payload in payload_list:
                 try:
+                    #print(f"Testing: {payload}")
                     data = self.parser(url,key,payload)
                     parsed_data = urlparse(url)
-                    new_url = parsed_data.scheme +  "://" + parsed_data.netloc + "/" + parsed_data.path
+                    new_url = parsed_data.scheme +  "://" + parsed_data.netloc + parsed_data.path
                     #print(new_url)
+                    #print(data)
                     if self.headers:
                         #print("I am here")
                         response = requests.get(new_url,params=data, headers=self.headers).text
@@ -243,7 +289,7 @@ class Main:
                         response = requests.get(new_url, params=data).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
-
+                        print(self.replace(url,key,payload))
                         self.result.append(self.replace(url,key,payload))
                         return True
                 except Exception as e:
@@ -253,6 +299,8 @@ class Main:
         return None
 
 if __name__ == "__main__":
+    urls = []
+    Scanner = Main(filename, output, headers=headers)
     try:
         #out = []
         #print(headers)
@@ -262,8 +310,12 @@ if __name__ == "__main__":
             if Scanner.result:
                 Scanner.write(output,Scanner.result[0])
             exit()
-        Scanner = Main(filename,output,headers=headers)
-        urls = Scanner.read(filename)
+        elif pipe:
+            out = sys.stdin
+            for url in out:
+                urls.append(url)
+        else:
+            urls = Scanner.read(filename)
         print(Fore.GREEN + "[+] CURRENT THREADS: {}".format(threads))
         '''
         for url in urls:
