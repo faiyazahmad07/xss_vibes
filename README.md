@@ -46,6 +46,17 @@ python3 main.py -f urls.txt -H "Cookies:test=123;id=asdasd" -t 7 -o result.txt
 
 Scanning single URL:
 python3 main.py -u http://example.com/hpp/?pp=12 -o out.txt
+
+Detect waf & scan:
+python3 main.py -u http://example.com/hpp/?pp=12 -o out.txt --waf
+
+Specify waf manually:
+
+python3 main.py -u http://example.com/hpp/?pp=12 -o out.txt -w cloudflare
+
+Using PIPE
+
+cat katana.txt | python3 main.py --pipe -t 7
 ```
 
 ### DEMONSTRATION
