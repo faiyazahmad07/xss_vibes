@@ -288,7 +288,7 @@ class Main:
                     else:
                         response = requests.get(new_url, params=data).text
                     if payload in response:
-                        print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLAOD USED: {payload}")
+                        print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLOAD USED: {payload}")
                         print(self.replace(url,key,payload))
                         self.result.append(self.replace(url,key,payload))
                         return True
