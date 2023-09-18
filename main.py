@@ -190,7 +190,7 @@ class Main:
             print(f"[+] {len(parameters)} parameters identified")
         for parameter in parameters:
             if not threads or threads == 1:
-                print(f"[+] Testing parameter name: {parameter}")
+                print(Fore.WHITE + f"[+] Testing parameter name: {parameter}")
             out = self.validator(dangerous_characters,parameter,url)
             data.append(out)
         if not threads or threads == 1:
