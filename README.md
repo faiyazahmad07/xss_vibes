@@ -68,3 +68,4 @@ cat katana.txt | python3 main.py --pipe -t 7
 - [Asif Pathan](https://www.linkedin.com/in/asifpathan48/): Contributed in adding payloads
 - [Kunal Dhumal](https://www.linkedin.com/in/kunal-dhumal-47356721a/): Contributed in adding payloads
 - [Krishna Gupta](https://www.linkedin.com/in/iamkrishnagupta/): Developed Module
+- [Sanjay](): Developed Module 
