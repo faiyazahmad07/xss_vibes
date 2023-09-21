@@ -16,6 +16,8 @@ class Adder:
         if filename:
             with open(val.filename, 'r') as payloads:
                 payloads = payloads.readlines()
+            if val.waf:
+                val.waf = val.waf.lower()
             for payload in payloads:
                 new_data = {
                     "Payload": payload,
@@ -37,6 +39,8 @@ class Adder:
             print("[+] PAYLOAD HAS BEEN ADDED")
 
         else:
+            if val.waf:
+                val.waf = val.waf.lower()
             new_data = {
                 "Payload": val.payload,
                 "Attribute": [],
