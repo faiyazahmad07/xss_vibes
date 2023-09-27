@@ -36,7 +36,7 @@ python3 main.py -f <filename> -o <output>
 -o: Output filename in which all the vulnerable endpoints is stored
 -t: No of threads[Increase the threads if you want more speed] (Max: 10)
 -u: Single URL to scan.
--H: Custom Headers.(PLease use , within "" to add multiple headers)
+-C: Custom Cookies.
 
 Using  multiple  headers:
 python3 main.py -f urls.txt -C "Cookies:test=123;id=asdasd" -t 7 -o result.txt
