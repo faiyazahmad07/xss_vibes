@@ -26,7 +26,7 @@ parser.add_option('-f', dest='filename', help="specify Filename to scan. Eg: url
 parser.add_option("-u", dest="url", help="scan a single URL. Eg: http://example.com/?id=2")
 parser.add_option('-o', dest='output', help="filename to store output. Eg: result.txt")
 parser.add_option('-t', dest='threads', help="no of threads to send concurrent requests(Max: 10)")
-parser.add_option('-H', dest='headers', help="specify Custom Headers")
+parser.add_option('-C', dest='cookies', help="specify cookies")
 parser.add_option('--waf', dest='waf',action='store_true', help="detect web application firewall and then test payloads")
 parser.add_option('-w', dest='custom_waf',help='use specific payloads related to W.A.F')
 parser.add_option('--pipe',dest="pipe",action="store_true",help="pipe output of a process as an input")
@@ -39,11 +39,11 @@ url = val.url
 waf = val.waf
 pipe = val.pipe
 custom_waf = val.custom_waf
-headers = val.headers
+headers = val.cookies #Cookies
 
 try:
     if headers:
-        print(Fore.WHITE + "[+] HEADERS: {}".format(headers))
+        print(Fore.WHITE + "[+] COOKIES: {}".format(headers))
         headers = Parser.headerParser(headers.split(','))
 except AttributeError:
     headers = Parser.headerParser(headers.split())
