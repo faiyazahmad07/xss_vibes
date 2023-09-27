@@ -8,7 +8,7 @@
 - Added threads feature: You can now specify the threads to send multiple request at the same time!(Details given below)
 - Improved Payloads: The payloads are now more accurate to the target
 - Single URL Scan: Now you can scan single url by using -u flag.
-- Headers: You can now add your custom headers to test authenticated or restricted endpoints!
+- Cookies: You can now add your custom cookies to test authenticated or restricted endpoints!
 - Improved Adder.py: Now you can payloads directly from a file! The new adder.py can automatically detect all the dangerous characters.
 - WAF: This tool can now detect web application firewalls and then use specialized payloads to bypasss them.
 - Custom WAF: You can choose payloads that are designed for specific waf.
@@ -39,7 +39,7 @@ python3 main.py -f <filename> -o <output>
 -H: Custom Headers.(PLease use , within "" to add multiple headers)
 
 Using  multiple  headers:
-python3 main.py -f urls.txt -H "Cookies:test=123;id=asdasd, User-Agent: Mozilla/Firefox" -t 7 -o result.txt
+python3 main.py -f urls.txt -C "Cookies:test=123;id=asdasd" -t 7 -o result.txt
 
 Using  single  header:
 python3 main.py -f urls.txt -H "Cookies:test=123;id=asdasd" -t 7 -o result.txt
