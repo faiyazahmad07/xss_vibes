@@ -167,9 +167,9 @@ class Main:
                 #print(new_url)
                 if self.headers:
                     #print("I am here")
-                    response = requests.get(new_url,params=final_parameters,headers=self.headers,verify=False).text
+                    response = requests.get(new_url,params=final_parameters,headers=self.headers).text
                 else:
-                    response = requests.get(new_url,params=final_parameters,verify=False).text
+                    response = requests.get(new_url,params=final_parameters).text
                 if data + "randomstring" in response:
                     if not threads or threads == 1:
                         print(Fore.GREEN + f"[+] {data} is reflecting in the response")
@@ -284,9 +284,9 @@ class Main:
                     #print(data)
                     if self.headers:
                         #print("I am here")
-                        response = requests.get(new_url,params=data, headers=self.headers,verify=False).text
+                        response = requests.get(new_url,params=data, headers=self.headers).text
                     else:
-                        response = requests.get(new_url, params=data,verify=False).text
+                        response = requests.get(new_url, params=data).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLOAD USED: {payload}")
                         print(self.replace(url,key,payload))
