@@ -26,7 +26,7 @@ parser.add_option('-f', dest='filename', help="specify Filename to scan. Eg: url
 parser.add_option("-u", dest="url", help="scan a single URL. Eg: http://example.com/?id=2")
 parser.add_option('-o', dest='output', help="filename to store output. Eg: result.txt")
 parser.add_option('-t', dest='threads', help="no of threads to send concurrent requests(Max: 10)")
-parser.add_option('-C', dest='cookies', help="specify cookies")
+parser.add_option('-H', dest='headers', help="specify Custom Headers")
 parser.add_option('--waf', dest='waf',action='store_true', help="detect web application firewall and then test payloads")
 parser.add_option('-w', dest='custom_waf',help='use specific payloads related to W.A.F')
 parser.add_option('--pipe',dest="pipe",action="store_true",help="pipe output of a process as an input")
@@ -39,11 +39,11 @@ url = val.url
 waf = val.waf
 pipe = val.pipe
 custom_waf = val.custom_waf
-headers = val.cookies #Cookies
+headers = val.headers
 
 try:
     if headers:
-        print(Fore.WHITE + "[+] COOKIES: {}".format(headers))
+        print(Fore.WHITE + "[+] HEADERS: {}".format(headers))
         headers = Parser.headerParser(headers.split(','))
 except AttributeError:
     headers = Parser.headerParser(headers.split())
@@ -167,9 +167,9 @@ class Main:
                 #print(new_url)
                 if self.headers:
                     #print("I am here")
-                    response = requests.get(new_url,params=final_parameters,headers=self.headers).text
+                    response = requests.get(new_url,params=final_parameters,headers=self.headers,verify=False).text
                 else:
-                    response = requests.get(new_url,params=final_parameters).text
+                    response = requests.get(new_url,params=final_parameters,verify=False).text
                 if data + "randomstring" in response:
                     if not threads or threads == 1:
                         print(Fore.GREEN + f"[+] {data} is reflecting in the response")
@@ -284,9 +284,9 @@ class Main:
                     #print(data)
                     if self.headers:
                         #print("I am here")
-                        response = requests.get(new_url,params=data, headers=self.headers).text
+                        response = requests.get(new_url,params=data, headers=self.headers,verify=False).text
                     else:
-                        response = requests.get(new_url, params=data).text
+                        response = requests.get(new_url, params=data,verify=False).text
                     if payload in response:
                         print(Fore.RED + f"[+] VULNERABLE: {url}\nPARAMETER: {key}\nPAYLOAD USED: {payload}")
                         print(self.replace(url,key,payload))
