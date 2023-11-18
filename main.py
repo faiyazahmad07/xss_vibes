@@ -12,11 +12,11 @@ from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 
 print(Fore.LIGHTBLUE_EX + """
-                 _     _ _______ _______ _    _ _____ ______  _______ _______
-                  \___/  |______ |______  \  /    |   |_____] |______ |______
-                 _/   \_ ______| ______|   \/   __|__ |_____] |______ ______|
-                                #Harmonizing Web Safety
-                                 #Author: Faiyaz Ahmad
+                 _     _ _______ _______  _    _ _____ ______  _______ _______
+                  \___/  |______ |______   \  /    |   |_____] |______ |______
+                 _/   \_ ______| ______|    \/   __|__ |_____] |______ ______|
+                                 #Harmonizing Web Safety
+                                  #Author: Faiyaz Ahmad
             """ + Fore.WHITE)
 
 
@@ -29,6 +29,7 @@ parser.add_option('-t', dest='threads', help="no of threads to send concurrent r
 parser.add_option('-H', dest='headers', help="specify Custom Headers")
 parser.add_option('--waf', dest='waf',action='store_true', help="detect web application firewall and then test payloads")
 parser.add_option('-w', dest='custom_waf',help='use specific payloads related to W.A.F')
+parser.add_option('--crawl',dest='crawl',help='crawl then find xss',action="store_true")
 parser.add_option('--pipe',dest="pipe",action="store_true",help="pipe output of a process as an input")
 
 val,args = parser.parse_args()
@@ -36,6 +37,7 @@ filename = val.filename
 threads = val.threads
 output = val.output
 url = val.url
+crawl = val.crawl
 waf = val.waf
 pipe = val.pipe
 custom_waf = val.custom_waf
@@ -54,6 +56,10 @@ except TypeError:
     threads = 1
 if threads > 10:
     threads = 7
+
+if crawl:
+    filename = f"{url.split('://')[1]}_katana"
+
 class Main:
 
     def __init__(self,url=None, filename=None, output=None,headers=None):
@@ -112,6 +118,17 @@ class Main:
                 b += 1
             a += 1
         return arr
+    
+    def crawl(self):
+        '''
+        Use this method to crawl the links using katana (return type: None)
+        '''
+        print(Fore.BLUE + "[+] CRAWLING LINKS")
+        subprocess.check_output(f"katana -u {url} -jc -d 4 -o {url.split('://')[1]}_katana",shell=True)
+        print(Fore.BLUE + f"[+] RESULT SAVED AS {url.split('://')[1]}_katana")
+        return None
+
+
 
     def parameters(self, url):
 
@@ -304,12 +321,15 @@ if __name__ == "__main__":
     try:
         #out = []
         #print(headers)
-        if url:
+        if url and not filename:
             Scanner = Main(url,output,headers=headers)
             Scanner.scanner(url)
             if Scanner.result:
                 Scanner.write(output,Scanner.result[0])
             exit()
+        elif filename and crawl:
+            Scanner.crawl()
+            urls = Scanner.read(filename)
         elif pipe:
             out = sys.stdin
             for url in out:
