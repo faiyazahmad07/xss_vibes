@@ -12,6 +12,7 @@
 - Improved Adder.py: Now you can payloads directly from a file! The new adder.py can automatically detect all the dangerous characters.
 - WAF: This tool can now detect web application firewalls and then use specialized payloads to bypasss them.
 - Custom WAF: You can choose payloads that are designed for specific waf.
+- Crawler: You can now run katana within the tool to find the links first and then look for vulnerabilities.
 
 ### FEATURES
 
@@ -23,8 +24,9 @@
 ### I N S T A L L A T I O N
 
 ```
+(Please Install Katana into your machine to access the full potential of this tool)
 1. Clone the repository: git clone https://github.com/faiyazahmad07/xss_vibes
-2. Install the requirements file: pip3 install -r requirements
+2. Install the requirements file: pip3 install -r requirement
 3. Run the main.py file
 ```
 
@@ -37,6 +39,7 @@ python3 main.py -f <filename> -o <output>
 -t: No of threads[Increase the threads if you want more speed] (Max: 10)
 -u: Single URL to scan.
 -H: Custom Headers.(PLease use , within "" to add multiple headers)
+--crawl: Crawl the links first and then find xss
 
 Using  multiple  headers:
 python3 main.py -f urls.txt -H "Cookies:test=123;id=asdasd, User-Agent: Mozilla/Firefox" -t 7 -o result.txt
